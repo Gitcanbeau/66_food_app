@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodItemService } from '../service/fooditem.service';
@@ -74,3 +73,4 @@ export class FoodCatalogueComponent implements OnInit {
     this.router.navigate(['/orderSummary'], { queryParams: { data: JSON.stringify(this.orderSummary) } });
   }
 }
+
