@@ -1,0 +1,293 @@
+.header {
+    background: linear-gradient(45deg, #3f51b5, #2196f3);
+    color: white;
+    padding: 20px 40px;  // Increase the horizontal padding to make it wider
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    position: sticky;  // Make the header fixed
+    top: 0;  // Align it to the top
+    width: 100%;  // Ensure it spans the full width
+    z-index: 1000;  // Ensure it floats above other content
+  
+    .header-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;  // Allow items to wrap when the window is resized
+  
+      .header-logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.7em; // Increase the font size of the logo text
+        font-weight: bold;
+        gap: 10px; // Adjust gap to ensure proper spacing
+  
+        .logo-icon {
+          font-size: 1.5em;  // Increase the font size of the logo icon
+          line-height: 1;  // Ensure the icon is vertically centered
+          vertical-align: middle;  // Vertically align the icon in the middle
+          margin-right: 10px;  // Add margin to ensure space around the icon
+        }
+      }
+  
+      .header-nav {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        gap: 10px;
+
+        .dark-mode-toggle {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          color: white;
+  
+          mat-icon {
+            font-size: 1.5em;
+          }
+  
+          .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+          }
+  
+          .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+  
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 20px;  // Adjusted to fit the smaller height
+          }
+  
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;  // Adjusted height to fit within the slider
+            width: 14px;
+            left: 3px;  // Adjusted positioning
+            bottom: 3px;  // Adjusted positioning
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+          }
+  
+          input:checked + .slider {
+            background-color: #2196f3;
+          }
+  
+          input:checked + .slider:before {
+            transform: translateX(14px);  // Adjusted transform distance
+          }
+        }
+  
+  
+  
+  
+        .user-avatar {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          gap: 10px;
+          transition: transform 0.3s ease-in-out;  // Add transition for smooth scaling
+
+          &:hover {
+            transform: scale(1.2);  // Scale up the avatar when hovered
+          }
+  
+          .avatar-img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgb(255, 255, 255);
+          }
+  
+          .username {
+            font-size: 1.3em;
+          }
+        }
+      }
+    }
+  
+     // Media query for small screens
+    @media (max-width: 600px) {
+      .header-logo {
+        font-size: 1.2em;  // Reduce font size on small screens
+      }
+
+      .logo-icon {
+        font-size: 1.2em;  // Reduce icon size on small screens
+      }
+
+      .header-nav .user-avatar .username {
+        display: none;  // Hide the username on small screens to save space
+      }
+
+      .header-nav .user-avatar .avatar-img {
+        width: 30px;  // Reduce avatar size on small screens
+        height: 30px;  // Reduce avatar size on small screens
+      }
+    }
+  }
+  
+  
+// .header {
+//   background: var(--header-background-color-light);
+//   color: var(--header-text-color-light);
+//   padding: 20px 40px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+//   position: sticky;
+//   top: 0;
+//   width: 100%;
+//   z-index: 1000;
+//   transition: background-color 0.3s, color 0.3s;
+
+//   .header-container {
+//     display: flex;
+//     align-items: center;
+//     width: 100%;
+//     flex-wrap: wrap;
+
+//     .header-logo {
+//       display: flex;
+//       align-items: center;
+//       font-size: 1.7em;
+//       font-weight: bold;
+//       gap: 10px;
+
+//       .logo-icon {
+//         font-size: 1.5em;
+//         line-height: 1;
+//         vertical-align: middle;
+//         margin-right: 10px;
+//       }
+//     }
+
+//     .header-nav {
+//       display: flex;
+//       align-items: center;
+//       margin-left: auto;
+//       gap: 10px;
+
+//       .dark-mode-toggle {
+//         display: flex;
+//         align-items: center;
+//         gap: 5px;
+//         color: white;
+
+//         mat-icon {
+//           font-size: 1.5em;
+//         }
+
+//         .switch {
+//           position: relative;
+//           display: inline-block;
+//           width: 34px;
+//           height: 20px;
+//         }
+
+//         .switch input {
+//           opacity: 0;
+//           width: 0;
+//           height: 0;
+//         }
+
+//         .slider {
+//           position: absolute;
+//           cursor: pointer;
+//           top: 0;
+//           left: 0;
+//           right: 0;
+//           bottom: 0;
+//           background-color: #ccc;
+//           transition: 0.4s;
+//           border-radius: 20px;
+//         }
+
+//         .slider:before {
+//           position: absolute;
+//           content: "";
+//           height: 14px;
+//           width: 14px;
+//           left: 3px;
+//           bottom: 3px;
+//           background-color: white;
+//           transition: 0.4s;
+//           border-radius: 50%;
+//         }
+
+//         input:checked + .slider {
+//           background-color: #2196f3;
+//         }
+
+//         input:checked + .slider:before {
+//           transform: translateX(14px);
+//         }
+//       }
+
+//       .user-avatar {
+//         display: flex;
+//         align-items: center;
+//         cursor: pointer;
+//         gap: 10px;
+//         transition: transform 0.3s ease-in-out;
+
+//         &:hover {
+//           transform: scale(1.2);
+//         }
+
+//         .avatar-img {
+//           border-radius: 50%;
+//           width: 40px;
+//           height: 40px;
+//           border: 2px solid rgb(255, 255, 255);
+//         }
+
+//         .username {
+//           font-size: 1.3em;
+//         }
+//       }
+//     }
+//   }
+
+//   body.dark-mode & {
+//     background: var(--header-background-color-dark);
+//     color: var(--header-text-color-dark);
+//   }
+
+//   @media (max-width: 600px) {
+//     .header-logo {
+//       font-size: 1.2em;
+//     }
+
+//     .logo-icon {
+//       font-size: 1.2em;
+//     }
+
+//     .header-nav .user-avatar .username {
+//       display: none;
+//     }
+
+//     .header-nav .user-avatar .avatar-img {
+//       width: 30px;
+//       height: 30px;
+//     }
+//   }
+// }
