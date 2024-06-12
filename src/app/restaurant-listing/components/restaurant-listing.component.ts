@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-restaurant-listing',
   templateUrl: './restaurant-listing.component.html',
-  styleUrls: ['./restaurant-listing.component.css']
+  styleUrls: ['./restaurant-listing.component.scss']
 })
 export class RestaurantListingComponent {
 

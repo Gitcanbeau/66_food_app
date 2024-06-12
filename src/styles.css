@@ -1,20 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+ /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --background-color-light: #fff;
+  --background-color-dark: #333;
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+  --card-background-color-light: #fff;
+  --card-background-color-dark: #444;
+  --card-shadow-color-light: rgba(0, 0, 0, 0.2);
+  --card-shadow-color-dark: rgba(0, 0, 0, 0.6);
+}
+
+body {
+  background-color: var(--background-color-light);
+  color: var(--text-color-light);
+}
+
+body.dark-mode {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+ 
 
 
-/* You can add global styles to this file, and also import other style files */
-
-.restaurant-grid {
+  .restaurant-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(250px, 1fr));
     grid-gap: 20px;
   }
 
   .restaurant-card {
+    background-color: var(--card-background-color-light);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--card-shadow-color-light);
+    overflow: hidden;
+    transition: background-color 0.3s, box-shadow 0.3s;  
+  
+    &:hover {
+      box-shadow: 0 0 15px var(--card-shadow-color-light);
+    }
+  }
+  
+  body.dark-mode .restaurant-card {
+    background-color: var(--card-background-color-dark);
+    box-shadow: 0 0 10px var(--card-shadow-color-dark);
+  
+    &:hover {
+      box-shadow: 0 0 15px var(--card-shadow-color-dark);
+    }
+  }
+
+  /* .restaurant-card {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-  }
+  } */
 
   .restaurant-image {
     height: 200px;
@@ -147,3 +189,4 @@
   margin-left: 10px;
 }
   
+

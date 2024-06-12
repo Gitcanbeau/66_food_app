@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodItemService } from '../service/fooditem.service';
 import { FoodCataloguePage } from 'src/app/Shared/models/FoodCataloguePage';
@@ -7,27 +7,22 @@ import { FoodItem } from 'src/app/Shared/models/FoodItem';
 @Component({
   selector: 'app-food-catalogue',
   templateUrl: './food-catalogue.component.html',
-  styleUrls: ['./food-catalogue.component.css']
+  styleUrls: ['./food-catalogue.component.scss']
 })
-export class FoodCatalogueComponent {
+export class FoodCatalogueComponent implements OnInit {
 
   restaurantId: number;
   foodItemResponse: FoodCataloguePage;
-  foodItemCart: FoodItem[] = [];
-  orderSummary: FoodCataloguePage;
+  foodItemCart: { [key: number]: number } = {};  // Track user-selected quantities separately
+  orderSummary: FoodCataloguePage & { total: number };
 
-
-  constructor(private route: ActivatedRoute, private foodItemService: FoodItemService, private router: Router) {
-  }
+  constructor(private route: ActivatedRoute, private foodItemService: FoodItemService, private router: Router) { }
 
   ngOnInit() {
-
     this.route.paramMap.subscribe(params => {
       this.restaurantId = +params.get('id');
+      this.getFoodItemsByRestaurant(this.restaurantId);
     });
-
-    this.getFoodItemsByRestaurant(this.restaurantId);
-    
   }
 
   getFoodItemsByRestaurant(restaurant: number) {
@@ -35,48 +30,47 @@ export class FoodCatalogueComponent {
       data => {
         this.foodItemResponse = data;
       }
-    )
+    );
   }
 
-  increment(food: any) {
-    food.quantity++;
-    const index = this.foodItemCart.findIndex(item => item.id === food.id);
-    if (index === -1) {
-      // If record does not exist, add it to the array
-      this.foodItemCart.push(food);
-    } else {
-      // If record exists, update it in the array
-      this.foodItemCart[index] = food;
+  getQuantity(food: FoodItem): number {
+    return this.foodItemCart[food.id] || 0;
+  }
+
+  increment(food: FoodItem) {
+    if (this.getQuantity(food) < food.quantity) {
+      this.foodItemCart[food.id] = this.getQuantity(food) + 1;
     }
   }
 
-  decrement(food: any) {
-    if (food.quantity > 0) {
-      food.quantity--;
-
-      const index = this.foodItemCart.findIndex(item => item.id === food.id);
-      if (this.foodItemCart[index].quantity == 0) {
-        this.foodItemCart.splice(index, 1);
-      } else {
-        // If record exists, update it in the array
-        this.foodItemCart[index] = food;
+  decrement(food: FoodItem) {
+    if (this.getQuantity(food) > 0) {
+      this.foodItemCart[food.id] = this.getQuantity(food) - 1;
+      if (this.foodItemCart[food.id] === 0) {
+        delete this.foodItemCart[food.id];
       }
-
     }
+  }
+
+  calculateTotal(): number {
+    return this.foodItemResponse.foodItemsList.reduce((acc, food) => {
+      const quantity = this.getQuantity(food);
+      return acc + food.price * quantity;
+    }, 0);
   }
 
   onCheckOut() {
-    this.foodItemCart;
+    const foodItemsList = this.foodItemResponse.foodItemsList.filter(food => this.getQuantity(food) > 0).map(food => ({
+      ...food,
+      quantity: this.getQuantity(food)
+    }));
+
     this.orderSummary = {
-      foodItemsList: [],
-      restaurant: null
-    }
-    this.orderSummary.foodItemsList = this.foodItemCart;
-    this.orderSummary.restaurant = this.foodItemResponse.restaurant;
+      foodItemsList,
+      restaurant: this.foodItemResponse.restaurant,
+      total: this.calculateTotal()
+    };
     this.router.navigate(['/orderSummary'], { queryParams: { data: JSON.stringify(this.orderSummary) } });
   }
-
-
-
-
 }
+
